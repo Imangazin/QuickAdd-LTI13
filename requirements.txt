@@ -1,0 +1,9 @@
+Flask
+python-dotenv
+Flask-Caching
+pylti1p3
+Werkzeug
+requests
+PyJWT
+cryptography
+gunicorn
