@@ -17,11 +17,13 @@ from quickadd import QuickAddError, add_user_to_course_and_sections
 
 load_dotenv()
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 SECRET_KEY = os.getenv("FLASK_SECRET_KEY")
 APP_FOLDER = os.getenv("APP_FOLDER")
 APP_URL_PREFIX = os.getenv("APP_URL_PREFIX") or (f"/{APP_FOLDER}" if APP_FOLDER else "")
 COOKIE_PATH = APP_URL_PREFIX.rstrip("/") + "/" if APP_URL_PREFIX else "/"
-CACHE_DIR = os.getenv("FLASK_CACHE_DIR") or f"/tmp/{APP_FOLDER}-flask-cache"
+CACHE_DIR = os.getenv("FLASK_CACHE_DIR") or os.path.join(BASE_DIR, ".flask-cache")
 QUICKADD_DEPLOYMENT_ID = os.getenv("QUICKADD_DEPLOYMENT_ID")
 QUICKADD_ROLE_OPTIONS = os.getenv(
     "QUICKADD_ROLE_OPTIONS",
@@ -104,7 +106,6 @@ app.config.from_mapping(
 
 cache = Cache(app)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 tool_conf = ToolConfJsonFile(os.path.join(BASE_DIR, "tool_config.json"))
 WORKFLOW_CACHE_PREFIX = "quickadd-workflow:"
 DEPLOYMENT_ID_CLAIM = "https://purl.imsglobal.org/spec/lti/claim/deployment_id"
